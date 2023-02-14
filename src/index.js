@@ -1,7 +1,7 @@
 //dotenvの適用
 import dotenv from 'dotenv';
 import { Client, GatewayIntentBits } from 'discord.js';
-import addItem from '../notion-example/addItem.js';
+import addItem from '../notion/addItem.js';
 
 const client = new Client({
 	intents: [GatewayIntentBits.Guilds, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMessages]
