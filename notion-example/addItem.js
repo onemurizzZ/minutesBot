@@ -1,6 +1,5 @@
 import * as dotenv from 'dotenv'
 import { Client } from "@notionhq/client"
-import { REST } from 'discord.js'
 dotenv.config()
 
 export default async function addItem(text) {
