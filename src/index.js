@@ -1,15 +1,7 @@
 //dotenvの適用
-import dotenv from 'dotenv'
-// require('dotenv').config();
-//.envからTOKENの呼び出し
-const {TOKEN} = process.env;
-
-// const { Client, GatewayIntentBits } = require('discord.js');
-// const { default: addItem } = require('../notion/addItem');
+import dotenv from 'dotenv';
 import { Client, GatewayIntentBits } from 'discord.js';
 import addItem from '../notion-example/addItem.js';
-
-addItem('test')
 
 const client = new Client({
 	intents: [GatewayIntentBits.Guilds, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMessages]
@@ -65,6 +57,24 @@ const commands = {
       const name = interaction.member?.displayName ?? interaction.user.username;
       const lang = interaction.options.get("language");
       return interaction.reply(source[lang.value](name));
+    },
+
+    async minutes(interaction) {
+      const now = new Date
+      let format = 'YYYY/MM/DD hh:mm'
+      format = format.replace(/YYYY/g, now.getFullYear());
+      format = format.replace(/MM/g, ('0' + (now.getMonth() + 1)).slice(-2));
+      format = format.replace(/DD/g, ('0' + now.getDate()).slice(-2));
+      format = format.replace(/hh/g, ('0' + now.getHours()).slice(-2));
+      format = format.replace(/mm/g, ('0' + now.getMinutes()).slice(-2));
+      const title = interaction.options.get("input");
+      if (!title) {
+        const response = await addItem(format);
+        return interaction.reply(response.url);
+      } else {
+        const response = await addItem(title.value);
+        return interaction.reply(response.url);
+      }
     }
   };
   
@@ -74,10 +84,9 @@ async function onInteraction(interaction) {
       return;
     }
     return commands[interaction.commandName](interaction);
-  }
+  };
 
 client.on("interactionCreate", interaction => onInteraction(interaction).catch(err => console.error(err)));
 
-
 //Discordへの接続
-client.login(TOKEN);
+client.login(process.env.TOKEN);

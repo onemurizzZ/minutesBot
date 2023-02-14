@@ -1,5 +1,6 @@
 import * as dotenv from 'dotenv'
 import { Client } from "@notionhq/client"
+import { REST } from 'discord.js'
 dotenv.config()
 
 export default async function addItem(text) {
@@ -25,6 +26,7 @@ export default async function addItem(text) {
     })
     console.log(response)
     console.log("Success! Entry added.")
+    return response
   } catch (error) {
     console.error(error.body)
   }

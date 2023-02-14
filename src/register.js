@@ -1,10 +1,8 @@
 //dotenvの適用
-require('dotenv').config();
-//.envからTOKENの呼び出し
-const {TOKEN} = process.env;
+import dotenv from 'dotenv';
 
 // コマンド設定部分
-const { SlashCommandBuilder } = require("discord.js")
+import { REST, Routes, SlashCommandBuilder } from 'discord.js';
  
 const ping = new SlashCommandBuilder()
     .setName('ping')
@@ -24,16 +22,25 @@ const hello = new SlashCommandBuilder()
                 {name:'English', value:'en'}
             )
     );
- 
-const commands = [ping, hello]
 
-const { REST, Routes } = require("discord.js")
-const rest = new REST({ version: '10' }).setToken(TOKEN)
+const minutes = new SlashCommandBuilder()
+                .setName('minutes')
+                .setDescription('議事録を作成します')
+                .addStringOption(option =>
+                    option
+                    .setName('input')
+                    .setDescription('タイトルを設定してください')
+                    .setRequired(false)
+                );
+                
+const commands = [ping, hello, minutes];
+
+const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
 async function main(){
-await rest.put(
-        Routes.applicationCommands("1073913475895668796"),
-        { body: commands }
-    )
+    await rest.put(
+            Routes.applicationCommands(process.env.APPLICATION_ID),
+            { body: commands }
+        )
 }
 
 main().catch(err => console.log(err))
