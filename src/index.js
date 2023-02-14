@@ -58,7 +58,11 @@ const commands = {
       const lang = interaction.options.get("language");
       return interaction.reply(source[lang.value](name));
     },
-
+    /**
+     * 
+     * @param {Discord.CommandInteraction} interaction 
+     * @returns {string} url
+     */
     async minutes(interaction) {
       const now = new Date
       let format = 'YYYY/MM/DD hh:mm'
