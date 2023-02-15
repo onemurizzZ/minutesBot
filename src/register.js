@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 // コマンド設定部分
 import { REST, Routes, SlashCommandBuilder } from 'discord.js';
- 
+
 const ping = new SlashCommandBuilder()
     .setName('ping')
     .setDescription('pong!')
@@ -38,7 +38,7 @@ const commands = [ping, hello, minutes];
 const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
 async function main(){
     await rest.put(
-            Routes.applicationCommands(process.env.APPLICATION_ID),
+            Routes.applicationGuildCommands(process.env.APPLICATION_ID, prcess.env.GUILD_ID),
             { body: commands }
         )
 }

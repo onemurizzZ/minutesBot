@@ -5,23 +5,210 @@ dotenv.config()
 export default async function addItem(text) {
   console.log(process.env.NOTION_KEY)
   console.log(process.env.NOTION_DATABASE_ID)
+
   const notion = new Client({ auth: process.env.NOTION_KEY })
 
   const databaseId = process.env.NOTION_DATABASE_ID
   try {
     const response = await notion.pages.create({
-      parent: { database_id: databaseId },
-      properties: {
-        title: {
-          title:[
+      "icon": {
+        "type": "emoji",
+        "emoji": "😼"
+      },
+      "parent": { database_id: databaseId },
+      "properties": {
+        "Name": {
+          "title":[
             {
               "text": {
                 "content": text
               }
             }
           ]
-        }
+        },
+        "participants": {
+          "people": [],
+        },
       },
+      "children": [
+        {
+          "type": "heading_1",
+          "heading_1": {
+            "rich_text": [
+              {
+                "text": {
+                  "content": "議題 📌"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "to_do",
+          "to_do": {
+            "rich_text": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "",
+                  "link": null
+                }
+              }
+            ],
+            "color": "default"
+          }
+        },
+        {
+          "type": "to_do",
+          "to_do": {
+            "rich_text": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "",
+                  "link": null
+                }
+              }
+            ],
+            "color": "default"
+          }
+        },
+        {
+          "type": "to_do",
+          "to_do": {
+            "rich_text": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "",
+                  "link": null
+                }
+              }
+            ],
+            "color": "default"
+          }
+        },
+        {
+          "type": "heading_1",
+          "heading_1": {
+            "rich_text": [
+              {
+                "text": {
+                  "content": "議事メモ 💬"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "paragraph",
+          "paragraph": {
+            "rich_text": [{
+              "type": "text",
+              "text": {
+                "content": "",
+                "link": null,
+              }
+            }],
+            "color": "default"
+          }
+        },
+        {
+          "type": "paragraph",
+          "paragraph": {
+            "rich_text": [{
+              "type": "text",
+              "text": {
+                "content": "",
+                "link": null,
+              }
+            }],
+            "color": "default"
+          }
+        },
+        {
+          "type": "paragraph",
+          "paragraph": {
+            "rich_text": [{
+              "type": "text",
+              "text": {
+                "content": "",
+                "link": null,
+              }
+            }],
+            "color": "default"
+          }
+        },
+        {
+          "type": "heading_1",
+          "heading_1": {
+            "rich_text": [
+              {
+                "text": {
+                  "content": "次やること ✅"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "to_do",
+          "to_do": {
+            "rich_text": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "",
+                  "link": null
+                }
+              }
+            ],
+            "color": "default"
+          }
+        },
+        {
+          "type": "to_do",
+          "to_do": {
+            "rich_text": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "",
+                  "link": null
+                }
+              }
+            ],
+            "color": "default"
+          }
+        },
+        {
+          "type": "to_do",
+          "to_do": {
+            "rich_text": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "",
+                  "link": null
+                }
+              }
+            ],
+            "color": "default"
+          }
+        },
+        {
+          "type": "heading_1",
+          "heading_1": {
+            "rich_text": [
+              {
+                "text": {
+                  "content": "資料 📎"
+                }
+              }
+            ]
+          }
+        },
+      ]
     })
     console.log(response)
     console.log("Success! Entry added.")
@@ -30,4 +217,3 @@ export default async function addItem(text) {
     console.error(error.body)
   }
 }
-
