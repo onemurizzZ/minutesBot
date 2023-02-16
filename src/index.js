@@ -81,7 +81,7 @@ const commands = {
           .setURL(response.url)
           .setColor("#f5f5f5")
 
-        return interaction.reply(embed);
+        return interaction.reply({ embeds: [embed] });
       } else {
         const response = await addItem(title.value);
 
@@ -90,8 +90,8 @@ const commands = {
           .setDescription(`😼${title.value} を作成したよ!`)
           .setURL(response.url)
           .setColor("#f5f5f5")
-          
-        return interaction.reply(embed);
+
+        return interaction.reply({ embeds: [embed] });
       }
     }
   };
