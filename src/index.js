@@ -74,10 +74,24 @@ const commands = {
       const title = interaction.options.get("title");
       if (!title) {
         const response = await addItem(format);
-        return interaction.reply(`😼${format} を作成したよ!\n${response.url}`);
+
+        const embed = Discord.embed(
+          title = `😼${format}`,
+          color = 0xf5f5f5,
+          description = `😼${format} を作成したよ!`,
+          url = response.url
+        );
+        return interaction.reply(embed);
       } else {
         const response = await addItem(title.value);
-        return interaction.reply(`😼${title.value} を作成したよ!\n${response.url}`);
+
+        const embed = Discord.embed(
+          title = `😼${title.value}`,
+          color = 0xf5f5f5,
+          description = `😼${title.value} を作成したよ!`,
+          url = response.url
+        );
+        return interaction.reply(embed);
       }
     }
   };
