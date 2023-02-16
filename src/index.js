@@ -92,7 +92,5 @@ async function onInteraction(interaction) {
 
 client.on("interactionCreate", interaction => onInteraction(interaction).catch(err => console.error(err)));
 
-
-const TOKEN = "MTA3MzkxMzQ3NTg5NTY2ODc5Ng.GUt8fY.LEjrF9IrTJ9l10Fm1FUO8OG7XnOsl2fvHux6Cc"
 //Discordへの接続
-client.login(TOKEN);
+client.login(process.env.TOKEN);

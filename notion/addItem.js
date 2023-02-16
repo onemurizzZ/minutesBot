@@ -6,8 +6,9 @@ export default async function addItem(text) {
   const NOTION_KEY = process.env.NOTION_KEY
   const NOTION_DATABASE_ID = process.env.NOTION_DATABASE_ID
 
-  console.log(NOTION_KEY)
-  console.log(NOTION_DATABASE_ID)
+  console.log("using NOTION_KEY: ", NOTION_KEY)
+  console.log("using NOTION_DATABASE_ID: ", NOTION_DATABASE_ID)
+  
   const notion = new Client({ auth: NOTION_KEY })
 
   try {
