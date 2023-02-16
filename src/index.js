@@ -24,40 +24,40 @@ client.on('messageCreate', message => {
 });
 
 const commands = {
-    /**
-     * 
-     * @param {Discord.CommandInteraction} interaction 
-     * @returns 
-     */
-    async ping(interaction) {
-      const now = Date.now();
-      const msg = [
-        "pong!",
-        "",
-        `gateway: ${interaction.client.ws.ping}ms`,
-      ];
-      await interaction.reply({ content: msg.join("\n"), ephemeral: true });
-      await interaction.editReply([...msg, `往復: ${Date.now() - now}ms`].join("\n"));
-      return;
-    },
-    /**
-     * 
-     * @param {Discord.CommandInteraction} interaction 
-     * @returns 
-     */
-    async hello(interaction) {
-      const source = {
-        en(name){
-          return `Hello, ${name}!`
-        },
-        ja(name){
-          return `こんにちは、${name}さん。`
-        }
-      };
-      const name = interaction.member?.displayName ?? interaction.user.username;
-      const lang = interaction.options.get("language");
-      return interaction.reply(source[lang.value](name));
-    },
+    // /**
+    //  * 
+    //  * @param {Discord.CommandInteraction} interaction 
+    //  * @returns 
+    //  */
+    // async ping(interaction) {
+    //   const now = Date.now();
+    //   const msg = [
+    //     "pong!",
+    //     "",
+    //     `gateway: ${interaction.client.ws.ping}ms`,
+    //   ];
+    //   await interaction.reply({ content: msg.join("\n"), ephemeral: true });
+    //   await interaction.editReply([...msg, `往復: ${Date.now() - now}ms`].join("\n"));
+    //   return;
+    // },
+    // /**
+    //  * 
+    //  * @param {Discord.CommandInteraction} interaction 
+    //  * @returns 
+    //  */
+    // async hello(interaction) {
+    //   const source = {
+    //     en(name){
+    //       return `Hello, ${name}!`
+    //     },
+    //     ja(name){
+    //       return `こんにちは、${name}さん。`
+    //     }
+    //   };
+    //   const name = interaction.member?.displayName ?? interaction.user.username;
+    //   const lang = interaction.options.get("language");
+    //   return interaction.reply(source[lang.value](name));
+    // },
     /**
      * 
      * @param {Discord.CommandInteraction} interaction 
@@ -92,5 +92,7 @@ async function onInteraction(interaction) {
 
 client.on("interactionCreate", interaction => onInteraction(interaction).catch(err => console.error(err)));
 
+
+const TOKEN = "MTA3MzkxMzQ3NTg5NTY2ODc5Ng.GUt8fY.LEjrF9IrTJ9l10Fm1FUO8OG7XnOsl2fvHux6Cc"
 //Discordへの接続
-client.login(process.env.TOKEN);
+client.login(TOKEN);

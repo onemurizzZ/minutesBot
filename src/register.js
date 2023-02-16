@@ -23,6 +23,7 @@ import { REST, Routes, SlashCommandBuilder } from 'discord.js';
 //             )
 //     );
 
+
 const minutes = new SlashCommandBuilder()
                 .setName('minutes')
                 .setDescription('議事録を作成します')
@@ -35,12 +36,15 @@ const minutes = new SlashCommandBuilder()
                 
 const commands = [minutes];
 
-const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
+
+const rest = new REST({ version: '10' }).setToken(TOKEN);
 async function main(){
     await rest.put(
-            Routes.applicationGuildCommands(process.env.APPLICATION_ID, prcess.env.GUILD_ID),
+            Routes.applicationGuildCommands(APPLICATION_ID, GUILD_ID),
             { body: commands }
         )
+        .then(() => console.log('commands are registered!'))
+        .catch(console.error);
 }
 
 main().catch(err => console.log(err))
