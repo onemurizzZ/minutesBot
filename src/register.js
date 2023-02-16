@@ -37,10 +37,11 @@ const minutes = new SlashCommandBuilder()
 const commands = [minutes];
 
 
-const rest = new REST({ version: '10' }).setToken(TOKEN);
+const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
+
 async function main(){
     await rest.put(
-            Routes.applicationGuildCommands(APPLICATION_ID, GUILD_ID),
+            Routes.applicationGuildCommands(process.env.APPLICATION_ID, process.env.GUILD_ID),
             { body: commands }
         )
         .then(() => console.log('commands are registered!'))
