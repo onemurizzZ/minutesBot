@@ -71,7 +71,7 @@ const commands = {
       format = format.replace(/DD/g, ('0' + now.getDate()).slice(-2));
       format = format.replace(/hh/g, ('0' + now.getHours()).slice(-2));
       format = format.replace(/mm/g, ('0' + now.getMinutes()).slice(-2));
-      const title = interaction.options.get("input");
+      const title = interaction.options.get("title");
       if (!title) {
         const response = await addItem(format);
         return interaction.reply(response.url);

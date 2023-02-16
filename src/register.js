@@ -29,7 +29,7 @@ const minutes = new SlashCommandBuilder()
                 .setDescription('議事録を作成します')
                 .addStringOption(option =>
                     option
-                    .setName('input')
+                    .setName('title')
                     .setDescription('タイトルを設定してください')
                     .setRequired(false)
                 );
