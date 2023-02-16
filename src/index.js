@@ -77,7 +77,7 @@ const commands = {
 
         const embed = new EmbedBuilder()
           .setTitle(`😼${format}`)
-          .setDescription(`😼${format} を作成したよ!`)
+          .setDescription(`\n\n議事録に使ってね☝️`)
           .setURL(response.url)
           .setColor("#f5f5f5")
 
@@ -87,7 +87,7 @@ const commands = {
 
         const embed = new EmbedBuilder()
           .setTitle(`😼${title.value}`)
-          .setDescription(`😼${title.value} を作成したよ!`)
+          .setDescription(`\n\n議事録に使ってね☝️`)
           .setURL(response.url)
           .setColor("#f5f5f5")
 
