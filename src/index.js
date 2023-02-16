@@ -74,10 +74,10 @@ const commands = {
       const title = interaction.options.get("title");
       if (!title) {
         const response = await addItem(format);
-        return interaction.reply("😼", format, " を作成したよ!\n", response.url);
+        return interaction.reply(`😼${format} を作成したよ!\n${response.url}`);
       } else {
         const response = await addItem(title.value);
-        return interaction.reply("😼", title, " を作成したよ!\n", response.url);
+        return interaction.reply(`😼${title.value} を作成したよ!\n${response.url}`);
       }
     }
   };
