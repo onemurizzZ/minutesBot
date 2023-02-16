@@ -5,7 +5,10 @@ dotenv.config()
 export default async function addItem(text) {
   const NOTION_KEY = process.env.NOTION_KEY
   const NOTION_DATABASE_ID = process.env.NOTION_DATABASE_ID
-  const notion = new Client({ auth: NOTION_KEY })
+
+  console.log(NOTION_KEY)
+  console.log(NOTION_DATABASE_ID)
+  const notion = new Client({ auth: "secret_vMMuOls0Cth3r1uOKOSsjK16s2oxLSnbNg4xbdqnmAR" })
 
   try {
     const response = await notion.pages.create({
@@ -13,7 +16,7 @@ export default async function addItem(text) {
         "type": "emoji",
         "emoji": "😼"
       },
-      "parent": { database_id: NOTION_DATABASE_ID },
+      "parent": { database_id: "bb67b0105f3843168d0c3be1d711d2ef" },
       "properties": {
         "Name": {
           "title":[
