@@ -64,7 +64,8 @@ const commands = {
      * @returns {string} url
      */
     async minutes(interaction) {
-      const now = new Date(new Date().toLocaleString({ timeZone: 'Asia/Tokyo' }))
+      const now = new Date()
+      now.setTime(now.getTime() + 1000*60*60*9)
       let format = 'YYYY/MM/DD hh:mm'
       format = format.replace(/YYYY/g, now.getFullYear());
       format = format.replace(/MM/g, ('0' + (now.getMonth() + 1)).slice(-2));
