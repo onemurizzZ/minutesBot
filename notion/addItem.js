@@ -8,7 +8,7 @@ export default async function addItem(text) {
 
   console.log(NOTION_KEY)
   console.log(NOTION_DATABASE_ID)
-  const notion = new Client({ auth: "secret_vMMuOls0Cth3r1uOKOSsjK16s2oxLSnbNg4xbdqnmAR" })
+  const notion = new Client({ auth: NOTION_KEY })
 
   try {
     const response = await notion.pages.create({
@@ -16,7 +16,7 @@ export default async function addItem(text) {
         "type": "emoji",
         "emoji": "😼"
       },
-      "parent": { database_id: "bb67b0105f3843168d0c3be1d711d2ef" },
+      "parent": { database_id: NOTION_DATABASE_ID },
       "properties": {
         "Name": {
           "title":[
