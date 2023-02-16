@@ -1,6 +1,6 @@
 //dotenvの適用
 import dotenv from 'dotenv';
-import { Client, GatewayIntentBits } from 'discord.js';
+import { Client, EmbedBuilder, GatewayIntentBits } from 'discord.js';
 import addItem from '../notion/addItem.js';
 
 const client = new Client({
@@ -75,22 +75,22 @@ const commands = {
       if (!title) {
         const response = await addItem(format);
 
-        const embed = Discord.embed(
-          title = `😼${format}`,
-          color = 0xf5f5f5,
-          description = `😼${format} を作成したよ!`,
-          url = response.url
-        );
+        const embed = new EmbedBuilder()
+          .setTitle(`😼${format}`)
+          .setDescription(`😼${format} を作成したよ!`)
+          .setURL(response.url)
+          .setColor("#f5f5f5")
+
         return interaction.reply(embed);
       } else {
         const response = await addItem(title.value);
 
-        const embed = Discord.embed(
-          title = `😼${title.value}`,
-          color = 0xf5f5f5,
-          description = `😼${title.value} を作成したよ!`,
-          url = response.url
-        );
+        const embed = new EmbedBuilder()
+          .setTitle(`😼${title.value}`)
+          .setDescription(`😼${title.value} を作成したよ!`)
+          .setURL(response.url)
+          .setColor("#f5f5f5")
+          
         return interaction.reply(embed);
       }
     }
