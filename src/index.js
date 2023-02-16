@@ -79,7 +79,8 @@ const commands = {
           .setTitle(`😼${format}`)
           .setDescription(`\n\n議事録に使ってね☝️`)
           .setURL(response.url)
-          .setColor("#f5f5f5")
+          .setColor("#ff4500")
+          .setTimestamp()
 
         return interaction.reply({ embeds: [embed] });
       } else {
