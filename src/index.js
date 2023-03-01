@@ -1,7 +1,8 @@
 //dotenvの適用
-import dotenv from 'dotenv';
+import * as dotenv from 'dotenv';
 import { Client, EmbedBuilder, GatewayIntentBits } from 'discord.js';
 import addItem from '../notion/addItem.js';
+dotenv.config();
 
 const client = new Client({
 	intents: [GatewayIntentBits.Guilds, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMessages]
@@ -78,7 +79,7 @@ const commands = {
 
         const embed = new EmbedBuilder()
           .setTitle(`😼${format}`)
-          .setDescription(`\n\n議事録に使ってね☝️`)
+          .setDescription(`${interaction.author.username}によって新しい議事録が作成されました`)
           .setURL(response.url)
           .setColor("#ff4500")
           .setTimestamp()
@@ -89,7 +90,7 @@ const commands = {
 
         const embed = new EmbedBuilder()
           .setTitle(`😼${title.value}`)
-          .setDescription(`\n\n議事録に使ってね☝️`)
+          .setDescription(`${interaction.author.username}によって新しい議事録が作成されました`)
           .setURL(response.url)
           .setColor("#ff4500")
           .setTimestamp()
