@@ -79,7 +79,7 @@ const commands = {
 
         const embed = new EmbedBuilder()
           .setTitle(`😼${format}`)
-          .setDescription(`${interaction.author.username}によって新しい議事録が作成されました`)
+          .setDescription(`${interaction.user.username}によって新しい議事録が作成されました`)
           .setURL(response.url)
           .setColor("#ff4500")
           .setTimestamp()
@@ -90,7 +90,7 @@ const commands = {
 
         const embed = new EmbedBuilder()
           .setTitle(`😼${title.value}`)
-          .setDescription(`${interaction.author.username}によって新しい議事録が作成されました`)
+          .setDescription(`${interaction.user.username}によって新しい議事録が作成されました`)
           .setURL(response.url)
           .setColor("#ff4500")
           .setTimestamp()
