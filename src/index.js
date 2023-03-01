@@ -78,24 +78,25 @@ const commands = {
         const response = await addItem(format);
 
         const embed = new EmbedBuilder()
-          .setTitle(`😼${format}`)
-          .setDescription(`${interaction.user.username}によって新しい議事録が作成されました`)
+          .setTitle(`😼 ${format}`)
+          .setDescription(`<@!${interaction.user.id}>が議事録を作成しました`)
           .setURL(response.url)
           .setColor("#ff4500")
           .setTimestamp()
 
-        return interaction.reply({ embeds: [embed] });
+        await interaction.reply({ embeds: [embed] });
+        return;
       } else {
         const response = await addItem(title.value);
 
         const embed = new EmbedBuilder()
-          .setTitle(`😼${title.value}`)
-          .setDescription(`${interaction.user.username}によって新しい議事録が作成されました`)
+          .setTitle(`😼 ${title.value}`)
+          .setDescription(`<@!${interaction.user.id}>が議事録を作成しました`)
           .setURL(response.url)
           .setColor("#ff4500")
           .setTimestamp()
-
-        return interaction.reply({ embeds: [embed] });
+        await interaction.reply({ embeds: [embed] });
+        return;
       }
     }
   };
