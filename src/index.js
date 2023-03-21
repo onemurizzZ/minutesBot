@@ -121,7 +121,7 @@ const commands = {
       .setCustomId('makeIssue')
       .setTitle('issueの作成');
 
-    const ageInput = new TextInputBuilder()
+    const titleInput = new TextInputBuilder()
       .setCustomId('titleInput')
       .setLabel("タイトル")
       .setStyle(TextInputStyle.Short);
@@ -131,11 +131,19 @@ const commands = {
       .setLabel("本文")
       .setStyle(TextInputStyle.Paragraph);
 
-    const firstActionRow = new ActionRowBuilder().addComponents(ageInput);
+    const firstActionRow = new ActionRowBuilder().addComponents(titleInput);
     const secondActionRow = new ActionRowBuilder().addComponents(descriptionInput);
     modal.addComponents(firstActionRow, secondActionRow);
 
     await interaction.showModal(modal);
+
+    interaction.awaitModalSubmit({ time: 60000 })
+      .then(async interaction => {
+        const title = interaction.fields.getTextInputValue('titleInput');
+        const descritption = interaction.fields.getTextInputValue('descriptionInput');
+        await interaction.reply(`タイトル: ${title}\n本文: ${descritption}`);
+      })
+      .catch(console.error);
   }
 };
 
