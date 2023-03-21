@@ -1,5 +1,6 @@
 //dotenvの適用
-import dotenv from 'dotenv';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 // コマンド設定部分
 import { REST, Routes, SlashCommandBuilder } from 'discord.js';

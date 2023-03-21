@@ -1,5 +1,6 @@
 //dotenvの適用
-import dotenv from 'dotenv';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 // コマンド設定部分
 import { REST, Routes, SlashCommandBuilder } from 'discord.js';
@@ -25,25 +26,26 @@ import { REST, Routes, SlashCommandBuilder } from 'discord.js';
 
 
 const minutes = new SlashCommandBuilder()
-                .setName('minutes')
-                .setDescription('議事録を作成します')
-                .addStringOption(option =>
-                    option
-                    .setName('title')
-                    .setDescription('タイトルを設定してください')
-                    .setRequired(false)
-                );
-                
-const commands = [minutes];
+    .setName('minutes')
+    .setDescription('議事録を作成します')
+    .addStringOption((option) => option.setName('title').setDescription('タイトルを設定してください').setRequired(false));
+
+
+const issue = new SlashCommandBuilder()
+    .setName('issue')
+    .setDescription('Githubでissueを作成します');
+
+
+const commands = [minutes, issue];
 
 
 const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
 
-async function main(){
+async function main() {
     await rest.put(
-            Routes.applicationGuildCommands(process.env.APPLICATION_ID, process.env.GUILD_ID),
-            { body: commands }
-        )
+        Routes.applicationGuildCommands(process.env.APPLICATION_ID, process.env.GUILD_ID),
+        { body: commands }
+    )
         .then(() => console.log('commands are registered!'))
         .catch(console.error);
 }
