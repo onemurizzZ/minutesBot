@@ -1,17 +1,43 @@
-//dotenvの適用
+// env関係
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-import { Octokit, App } from 'octokit';
+// discord関連
+import { Octokit } from 'octokit';
 
-const octokit = new Octokit({
-  auth: process.env.GITHUB_TOKEN
-});
 
-const {
-  data: { login },
-} = await octokit.rest.users.getAuthenticated();
-console.log("Hello, %s", login);
+// firebase関係
+import {
+  doc,
+  setDoc,
+  collection,
+  getDoc,
+  getDocs,
+  query,
+  where,
+  updateDoc,
+  arrayUnion,
+  deleteDoc,
+  orderBy,
+  Timestamp,
+  runTransaction,
+} from "firebase/firestore";
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+
+const firebaseConfig = {
+  apiKey: process.env.API_KEY,
+  authDomain: process.env.AUTH,
+  projectId: process.env.PROJECT_ID,
+  storageBucket: process.env.STORAGE_BUCKET,
+  messagingSenderId: process.env.MESSAGING_SENDER_ID,
+  appId: process.env.APP_ID,
+  measurementId: process.env.MEASUREMENT_ID,
+};
+
+const app = initializeApp(firebaseConfig);
+const firebaseFirestore = getFirestore(app);
+
 
 import { Client, EmbedBuilder, GatewayIntentBits, ModalBuilder, TextInputBuilder, ActionRowBuilder, TextInputStyle } from 'discord.js';
 import addItem from '../notion/addItem.js';
@@ -37,40 +63,6 @@ client.on('messageCreate', message => {
 });
 
 const commands = {
-  // /**
-  //  * 
-  //  * @param {Discord.CommandInteraction} interaction 
-  //  * @returns 
-  //  */
-  // async ping(interaction) {
-  //   const now = Date.now();
-  //   const msg = [
-  //     "pong!",
-  //     "",
-  //     `gateway: ${interaction.client.ws.ping}ms`,
-  //   ];
-  //   await interaction.reply({ content: msg.join("\n"), ephemeral: true });
-  //   await interaction.editReply([...msg, `往復: ${Date.now() - now}ms`].join("\n"));
-  //   return;
-  // },
-  // /**
-  //  * 
-  //  * @param {Discord.CommandInteraction} interaction 
-  //  * @returns 
-  //  */
-  // async hello(interaction) {
-  //   const source = {
-  //     en(name){
-  //       return `Hello, ${name}!`
-  //     },
-  //     ja(name){
-  //       return `こんにちは、${name}さん。`
-  //     }
-  //   };
-  //   const name = interaction.member?.displayName ?? interaction.user.username;
-  //   const lang = interaction.options.get("language");
-  //   return interaction.reply(source[lang.value](name));
-  // },
   /**
    * 
    * @param {Discord.CommandInteraction} interaction 
@@ -117,6 +109,30 @@ const commands = {
    * @returns {void} 
    */
   async issue(interaction) {
+
+    // トークンが保存されているかを確認
+    const docRef = doc(firebaseFirestore, "teams", interaction.guildId, "github", interaction.user.id);
+    const docSnap = await getDoc(docRef);
+    if (!docSnap.exists) {
+      interaction.reply({
+        content: "githubのトークンが保存されていません",
+        ephemeral: true,
+      });
+      return;
+    }
+    const githubToken = docSnap.data()?.token;
+
+
+
+    // githubの接続
+    const octokit = new Octokit({
+      auth: githubToken,
+    });
+    await octokit.rest.users.getAuthenticated();
+
+
+
+    // モーダルウィンドウの準備
     const modal = new ModalBuilder()
       .setCustomId('makeIssue')
       .setTitle('issueの作成');
@@ -137,11 +153,28 @@ const commands = {
 
     await interaction.showModal(modal);
 
+
+    // モーダルウィンドウで入力された値の送信
     interaction.awaitModalSubmit({ time: 60000 })
       .then(async interaction => {
         const title = interaction.fields.getTextInputValue('titleInput');
         const descritption = interaction.fields.getTextInputValue('descriptionInput');
-        await interaction.reply(`タイトル: ${title}\n本文: ${descritption}`);
+        const { data: newIssue } = await octokit.rest.issues.create({
+          owner: "UnyteDAO",
+          repo: "Unyte-Discord",
+          title: title,
+          body: descritption,
+      });
+        const embed = new EmbedBuilder()
+          .setColor("#40e0d0")
+          .setTitle("**issueが作成されました**")
+          .setDescription(`\u002A\u002A<${title}>\u002A\u002A\n${descritption}`)
+          .setFields(
+            { name: "**作成者**", value: `<@!${interaction.user.id}>`, inline: true},
+            { name: "**リンク**", value: newIssue.html_url, inline: true},
+          )
+          .setTimestamp()
+        await interaction.reply({ embeds: [embed]});
       })
       .catch(console.error);
   }
