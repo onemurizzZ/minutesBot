@@ -103,12 +103,12 @@ export default async function addItem(text) {
           }
         },
         {
-          "type": "bulleted_liste_item",
+          "type": "bulleted_list_item",
           "bulleted_list_item": {
             "rich_text": [{
               "type": "text",
               "text": {
-                "cotent": "",
+                "content": "",
                 "link": null
               }
             }],
