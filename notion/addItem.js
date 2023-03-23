@@ -96,32 +96,7 @@ export default async function addItem(text) {
             "rich_text": [
               {
                 "text": {
-                  "content": "共有メモ 🚄"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "bulleted_liste_item",
-          "bulleted_list_item": {
-            "rich_text": [{
-              "type": "text",
-              "text": {
-                "cotent": "",
-                "link": null
-              }
-            }],
-            "color": "default"
-          }
-        },
-        {
-          "type": "heading_1",
-          "heading_1": {
-            "rich_text": [
-              {
-                "text": {
-                  "content": "議事録 💬"
+                  "content": "議事メモ 💬"
                 }
               }
             ]
