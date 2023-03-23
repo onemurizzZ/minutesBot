@@ -8,7 +8,7 @@ export default async function addItem(text) {
 
   console.log("using NOTION_KEY: ", NOTION_KEY)
   console.log("using NOTION_DATABASE_ID: ", NOTION_DATABASE_ID)
-  
+
   const notion = new Client({ auth: NOTION_KEY })
 
   try {
@@ -20,7 +20,7 @@ export default async function addItem(text) {
       "parent": { database_id: NOTION_DATABASE_ID },
       "properties": {
         "Name": {
-          "title":[
+          "title": [
             {
               "text": {
                 "content": text
@@ -96,7 +96,32 @@ export default async function addItem(text) {
             "rich_text": [
               {
                 "text": {
-                  "content": "議事メモ 💬"
+                  "content": "共有メモ 🚄"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "bulleted_liste_item",
+          "bulleted_list_item": {
+            "rich_text": [{
+              "type": "text",
+              "text": {
+                "cotent": "",
+                "link": null
+              }
+            }],
+            "color": "default"
+          }
+        },
+        {
+          "type": "heading_1",
+          "heading_1": {
+            "rich_text": [
+              {
+                "text": {
+                  "content": "議事録 💬"
                 }
               }
             ]
