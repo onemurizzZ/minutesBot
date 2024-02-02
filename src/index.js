@@ -60,6 +60,7 @@ client.on('messageCreate', async message => {
 
   // メッセージがbotへのメンションかどうかを確認
   console.log(message.content);
+  console.log(message.mentions.has(process.env.APPLICATION_ID));
   if (!message.mentions.has(process.env.APPLICATION_ID)) return;
   // messageのcotentからメンション部分を削除したものを取得
   const contentFromMessage = message.content.slice(22);
