@@ -1,6 +1,6 @@
-// env関係
-import * as dotenv from 'dotenv';
-dotenv.config();
+// envファイルのインポート
+import * as dotenv from 'dotenv'
+dotenv.config()
 
 // discord関連
 import { Octokit } from 'octokit';
@@ -53,14 +53,23 @@ client.once('ready', () => {
 });
 
 //返答
-client.on('messageCreate', message => {
+client.on('messageCreate', async message => {
   if (message.author.bot) {
     return;
   }
 
-  if (message.content == 'hi') {
-    message.channel.send('hi!');
-  }
+  // メッセージがbotへのメンションかどうかを確認
+  if (!message.mentions.has(process.env.APPLICATION_ID)) return;
+  // messageのcotentからメンション部分を削除したものを取得
+  const contentFromMessage = message.content.slice(22);
+  const contentReply = contentFromMessage === "" 
+    ? "# あんちゃん何て言ってるか分からんわ〜 もう少しハキハキしゃべったらどうだい？"
+    : "# え？\n " + contentFromMessage + "\n# だって？ そんなん知るかボケ！"
+  await message.reply({
+    content: contentReply,
+    ephemeral: true,
+  });
+
 });
 
 const commands = {
@@ -191,6 +200,7 @@ async function onInteraction(interaction) {
 };
 
 client.on("interactionCreate", interaction => onInteraction(interaction).catch(err => console.error(err)));
+
 
 //Discordへの接続
 client.login(process.env.TOKEN);
